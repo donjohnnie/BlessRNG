@@ -21,23 +21,16 @@
 #include "MainWindow.h"
 #include "Game.h"
 #include "SpriteCodex.h"
+std::ifstream options("ops.txt");
 
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	brd( gfx ),
 	rng( std::random_device()() ),
 	snek( {2,2} )
 {
-	for( int i = 0; i < nPoison; i++ )
-	{
-		brd.SpawnContents( rng,snek,Board::CellContents::Poison );
-	}
-	for( int i = 0; i < nFood; i++ )
-	{
-		brd.SpawnContents( rng,snek,Board::CellContents::Food );
-	}
+	createBoard(options);
 	sndTitle.Play( 1.0f,1.0f );
 }
 
@@ -85,8 +78,8 @@ void Game::UpdateModel()
 			{
 				snekMoveCounter -= snekModifiedMovePeriod;
 				const Location next = snek.GetNextHeadLocation( delta_loc );
-				const Board::CellContents contents = brd.GetContents( next );
-				if( !brd.IsInsideBoard( next ) ||
+				const Board::CellContents contents = brd->GetContents( next );
+				if( !brd->IsInsideBoard( next ) ||
 					snek.IsInTileExceptEnd( next ) ||
 					contents == Board::CellContents::Obstacle )
 				{
@@ -97,15 +90,15 @@ void Game::UpdateModel()
 				else if( contents == Board::CellContents::Food )
 				{
 					snek.GrowAndMoveBy( delta_loc );
-					brd.ConsumeContents( next );
-					brd.SpawnContents( rng,snek,Board::CellContents::Obstacle );
-					brd.SpawnContents( rng,snek,Board::CellContents::Food );
+					brd->ConsumeContents( next );
+					brd->SpawnContents( rng,snek,Board::CellContents::Obstacle );
+					brd->SpawnContents( rng,snek,Board::CellContents::Food );
 					sfxEat.Play( rng,0.8f );
 				}
 				else if( contents == Board::CellContents::Poison )
 				{
 					snek.MoveBy( delta_loc );
-					brd.ConsumeContents( next );
+					brd->ConsumeContents( next );
 					snekMovePeriod = std::max( snekMovePeriod * snekSpeedupFactor,snekMovePeriodMin );
 					sndFart.Play( rng,0.6f );
 				}
@@ -131,13 +124,13 @@ void Game::ComposeFrame()
 {
 	if( gameIsStarted )
 	{
-		snek.Draw( brd );
-		brd.DrawCells();
+		snek.Draw( *brd );
+		brd->DrawCells();
 		if( gameIsOver )
 		{
 			SpriteCodex::DrawGameOver( 350,265,gfx );
 		}
-		brd.DrawBorder();
+		brd->DrawBorder();
 	}
 	else
 	{

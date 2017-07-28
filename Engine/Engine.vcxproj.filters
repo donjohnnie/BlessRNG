@@ -152,4 +152,7 @@
       <Filter>Sounds</Filter>
     </Media>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="ops.txt" />
+  </ItemGroup>
 </Project>

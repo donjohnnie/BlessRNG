@@ -28,6 +28,7 @@
 #include <random>
 #include "SoundEffect.h"
 #include "FrameTimer.h"
+#include <fstream>
 
 class Game
 {
@@ -41,13 +42,27 @@ private:
 	void UpdateModel();
 	/********************************/
 	/*  User Functions              */
+	void createBoard(std::ifstream& input)
+	{
+		int aux1, aux2, aux3;
+		input >> aux1 >> aux2 >> aux3;
+		brd = new Board(gfx, aux1, aux2, aux3);
+		for ( int i = 0; i < nPoison; i++ )
+		{
+			brd->SpawnContents(rng, snek, Board::CellContents::Poison);
+		}
+		for ( int i = 0; i < nFood; i++ )
+		{
+			brd->SpawnContents(rng, snek, Board::CellContents::Food);
+		}
+	}
 	/********************************/
 private:
 	MainWindow& wnd;
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
-	Board brd;
+	Board* brd = nullptr;
 	Snake snek;
 	Location delta_loc = {1,0};
 	std::mt19937 rng;

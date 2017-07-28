@@ -2,10 +2,6 @@
 #include "Snake.h"
 #include <assert.h>
 
-Board::Board( Graphics& gfx )
-	:
-	gfx( gfx )
-{}
 
 void Board::DrawCell( const Location & loc,Color c )
 {
