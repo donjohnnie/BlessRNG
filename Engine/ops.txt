@@ -1,5 +1,5 @@
 [TileSize]
-20
+10
 
 [BoardSize]
 35 24

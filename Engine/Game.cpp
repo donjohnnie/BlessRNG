@@ -18,6 +18,9 @@
  *	You should have received a copy of the GNU General Public License					  *
  *	along with The Chili DirectX Framework.  If not, see <http://www.gnu.org/licenses/>.  *
  ******************************************************************************************/
+#define _CRTDBG_MAP_ALLOC  
+#include <stdlib.h>  
+#include <crtdbg.h>  
 #include "MainWindow.h"
 #include "Game.h"
 #include "SpriteCodex.h"
@@ -83,7 +86,9 @@ void Game::UpdateModel()
 				{
 					gameIsOver = true;
 					sndFart.Play(rng, 1.2f);
+					clearall();
 					sndMusic.StopAll();
+					_CrtDumpMemoryLeaks();
 				}
 				else if ( contents == Board::CellContents::Food )
 				{
@@ -153,7 +158,6 @@ void Game::createBoard(std::ifstream & input)
 
 void Game::ComposeFrame()
 {
-
 	if ( gameIsStarted )
 	{
 		snek.Draw(*brd);

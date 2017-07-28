@@ -36,10 +36,17 @@ public:
 	Game( class MainWindow& wnd );
 	Game( const Game& ) = delete;
 	Game& operator=( const Game& ) = delete;
+	
 	void Go();
 private:
 	void ComposeFrame();
 	void UpdateModel();
+	void clearall()
+	{
+		delete snekSpeedupFactor;
+		brd->clearmemory();
+		delete brd;
+	}
 	/********************************/
 	/*  User Functions              */
 	void createBoard(std::ifstream& input);

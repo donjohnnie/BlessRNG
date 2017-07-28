@@ -19,6 +19,7 @@ public:
 	{
 	
 	}
+	
 	void DrawCell( const Location& loc,Color c );
 	int GetGridWidth() const;
 	int GetGridHeight() const;
@@ -28,6 +29,10 @@ public:
 	void SpawnContents( std::mt19937& rng,const class Snake& snake,CellContents contents );
 	void DrawBorder();
 	void DrawCells();
+	void clearmemory()
+	{
+		delete[] contents;
+	}
 private:
 	static constexpr Color borderColor = Colors::Blue;
 	static constexpr Color obstacleColor = Colors::Gray;
