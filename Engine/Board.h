@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Graphics.h"
 #include "Location.h"
 #include <random>
@@ -16,9 +15,10 @@ public:
 	};
 public:
 	Board(Graphics& gfx, int dim, int w, int h) :
-		gfx(gfx), dimension(dim), width(w), height(h), contents(new CellContents[w*h])
-	{ }
-
+		gfx(gfx), dimension(dim), width(w), height(h), contents(new CellContents[width*height]{})
+	{
+	
+	}
 	void DrawCell( const Location& loc,Color c );
 	int GetGridWidth() const;
 	int GetGridHeight() const;

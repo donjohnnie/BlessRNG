@@ -42,20 +42,7 @@ private:
 	void UpdateModel();
 	/********************************/
 	/*  User Functions              */
-	void createBoard(std::ifstream& input)
-	{
-		int aux1, aux2, aux3;
-		input >> aux1 >> aux2 >> aux3;
-		brd = new Board(gfx, aux1, aux2, aux3);
-		for ( int i = 0; i < nPoison; i++ )
-		{
-			brd->SpawnContents(rng, snek, Board::CellContents::Poison);
-		}
-		for ( int i = 0; i < nFood; i++ )
-		{
-			brd->SpawnContents(rng, snek, Board::CellContents::Food);
-		}
-	}
+	void createBoard(std::ifstream& input);
 	/********************************/
 private:
 	MainWindow& wnd;
@@ -74,11 +61,11 @@ private:
 	SoundEffect sndFart = SoundEffect( { L"Sounds\\Fart.wav" } );
 	static constexpr float snekMovePeriodMin = 0.040f;
 	static constexpr float snekMovePeriodSpeedup = 0.15f;
-	static constexpr int nPoison = 240;
-	static constexpr int nFood = 12;
+	static constexpr int nPoison = 150;
+	static constexpr int nFood = 4;
 	float snekMovePeriod = 0.4f;
 	float snekMoveCounter = 0.0f;
-	static constexpr float snekSpeedupFactor = 0.93f;
+	float* snekSpeedupFactor = nullptr;
 	bool gameIsOver = false;
 	bool gameIsStarted = false;
 	/********************************/

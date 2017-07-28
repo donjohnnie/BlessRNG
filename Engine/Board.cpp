@@ -18,11 +18,13 @@ void Board::DrawCell( const Location & loc,Color c )
 
 int Board::GetGridWidth() const
 {
+	assert(width < Graphics::ScreenWidth);
 	return width;
 }
 
 int Board::GetGridHeight() const
 {
+	assert(height < Graphics::ScreenHeight);
 	return height;
 }
 
@@ -46,8 +48,10 @@ void Board::ConsumeContents( const Location& loc )
 
 void Board::SpawnContents( std::mt19937 & rng,const Snake & snake,CellContents contentsType )
 {
-	std::uniform_int_distribution<int> xDist( 0,GetGridWidth() - 1 );
-	std::uniform_int_distribution<int> yDist( 0,GetGridHeight() - 1 );
+	std::uniform_int_distribution<int> xDist(0, GetGridWidth() - 1);
+	std::uniform_int_distribution<int> yDist(0, GetGridHeight() - 1);
+	int temp = GetGridWidth() - 1;
+	int temp2 = GetGridHeight() - 1;
 
 	Location newLoc;
 	do
